@@ -15,15 +15,26 @@
     </header>
 
     <main>    
-        <section class="card questions-container" id="screen0" data-states="0">
+        <section class="card start-quiz" id="start-container">
             <p class="large-font intro">Basic Somm Quiz</p>
+            <p>You have 60 seconds to answers as many questions as you can. wrong answers will deduct 10 seconds off your time.
+                Click start when you are ready.
+            </p>
         </section>
         
-        <section class="card questions-container hide" id="screen0" data-states="1">
-            <h2 id="questions"></h2>
-            <ul id="possibleAnswers"></ul>
+        <section class="card hide" id="questions-container">
+            <h2 id="question">Question</h2>
+            <section id="answer-buttons" class="btn-grid">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </section>
+            <h2 id="check-answer" class="correct-wrong hide"></h2>
+            <section class="controls">
+                <button id="next-button" class="nxt-btn hide">Next</button>
+            </section>
         </section>
-        
 
         <section class="card timer">
             <section class="timer-text">
@@ -31,20 +42,30 @@
             <h3>Seconds Remaining</h3>
         </section>
 
-        <section class="card current-score">
-            <section class="win-loss-container"></section>
-            <h3>Score</h3>
-            <h4>Correct: <span class="correct">0</span></h4>
-            <h4>Wrong: <span class="wrong">0</span></h4>
-            <button class="restartButton">Restart</button>
+        <section class="card hide" id="score-container">
+            <form id="submit-form">
+                <h3 id="your-score"></h3>
+                <label id="initials-label">Enter Your Initials:</label>
+                <input type="text" id="initials-field" maxlength="3" placeholder="Enter Your Initials" />
+                <button id="submit-btn">Submit</button>
+            </form>
         </seciton>
 
-        <section class="card top-score-container">
-            <section class="top-score"></section>
-            <h4>Top Score: <span class="top">0</span></h4>
+        <section class="card highscores-container hide" id="highscores">
+            <section id="high-scores">
+                <h1 class="centered">Top Score:</h1>
+                <section id="highscore" class="highscore highscore-list"></section>
+                <section class="controls">
+                    <button id="restart-btn">Restart</button>
+                    <button id="clear-btn">Clear Scores</button>
+                </section>
+            </section>
         </section>
     </main>
-    <button class="center start-button">Start</button>
+
+    <section class="controls">
+        <button class="center start-btn" id="start-btn">Start Quiz</button>
+    </section>
 
 <script src="/assets/script.js"></script>
 </body>

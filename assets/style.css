@@ -32,11 +32,6 @@ body {
     line-height: 300px;
 }
 
-.center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-}
 .current-score .win-loss-container {
     display: flex;
     justify-content: space-between;
@@ -79,9 +74,9 @@ main {
     justify-content: space-around;
 }
 
-.questions-container {
-    width: 55vw;
-    height: 400px;
+#questions-container, #start-container{
+    width: 65vw;
+    height: 500px;
     margin: auto;
 }
 
@@ -117,6 +112,10 @@ p {
     padding: 55px;
 }
 
+.timer-count {
+    padding: 30px;
+}
+
 @media screen and (max-width: 1183px) {
     main {
       flex-direction: column;
@@ -128,7 +127,6 @@ p {
     }
   
     section {
-      background-color: rgb(134, 100, 100);
       margin: 20px auto;
       width: 92vw;
     }
@@ -141,7 +139,7 @@ p {
   
     .restart-game {
       font-size: 12px;
-      width: 20ox;
+      width: 20px;
       
     }
   

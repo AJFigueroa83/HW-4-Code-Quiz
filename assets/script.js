@@ -84,32 +84,34 @@ function init() {
     getWrongs;
 }
 
-function setState(state) {
-    switch (state) {
-      case 1:
-        populateQuestions();
-        break;
-      default:
-        break;
-    }
+// function setState(state) {
+//     switch (state) {
+//       case 1:
+//         populateQuestions();
+//         break;
+//       default:
+//         break;
+//     }
 
-    dynamicElements.forEach(function (ele) {
-        var possibleStatesAttr = ele.getAttribute("data-states");
-        var possibleStates = JSON.parse(possibleStatesAttr);
-        if (possibleStates.includes(state)) {
-            ele.classList.remove(HIDE_CLASS);
-        } else {
-        ele.classList.add(HIDE_CLASS);
-        }
-    });
-}
+//     dynamicElements.forEach(function (ele) {
+//         var possibleStatesAttr = ele.getAttribute("data-states");
+//         var possibleStates = JSON.parse(possibleStatesAttr);
+//         if (possibleStates.includes(state)) {
+//             ele.classList.remove(HIDE_CLASS);
+//         } else {
+//         ele.classList.add(HIDE_CLASS);
+//         }
+//     });
+// }
 // function to start the game //
+
+
 function startGame() {
     isWin = false;
     timerCount = 60;
     // Prevents start button from being clicked when round is in progress
     startButton.disabled = true;
-    populateQuestions()
+    displayQuestions()
     startTimer()
 }
 // function for the timer
@@ -133,21 +135,21 @@ function startTimer() {
     }, 1000);
 }
 
-function populateQuestions() {
-    var questionObj = sommQuestions[currentQuestion];
-    possibleAnswersEl.innerHTML = "";
-    sommQuestions.textcontent = questionObj.question;
-    questionObj.answers.forEach(function(question) {
-        var li = document.createElement('li');
-        li.textContent = question;
-        possibleAnswersEl.appendChild(li);
-    });
-    if (currentQuestion === sommQuestions.length - 1) {
-        currentQuestion = 0;
-    } else {
-        currentQuestion++;
-    }
-}
+// function populateQuestions() {
+//     var questions = sommQuestions[currentQuestion];
+//     possibleAnswersEl.innerHTML = "";
+//     sommQuestions.textcontent = questions.question;
+//     questions.answers.forEach(function(question) {
+//         var li = document.createElement('li');
+//         li.textContent = question;
+//         possibleAnswersEl.appendChild(li);
+//     });
+//     if (currentQuestion === sommQuestions.length - 1) {
+//         currentQuestion = 0;
+//     } else {
+//         currentQuestion++;
+//     }
+// }
 // Get stored value from client storage, if it exists
 function getCorrects() {
     var storedWins = localStorage.getItem("correctCount");
@@ -212,10 +214,6 @@ function restartGame() {
 }
 
 
-startButton.addEventListener("click", startGame, function() {
-    setState(1);
-});
+startButton.addEventListener("click", startGame);
 
-restartButton.addEventListener("click", restartGame, function() {
-    setState(0);
-});
+restartButton.addEventListener("click", restartGame);
