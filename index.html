@@ -15,11 +15,16 @@
     </header>
 
     <main>    
-        <section class="card questions-container">
+        <section class="card questions-container" id="screen0" data-states="0">
             <p class="large-font intro">Basic Somm Quiz</p>
         </section>
-
         
+        <section class="card questions-container hide" id="screen0" data-states="1">
+            <h2 id="questions"></h2>
+            <ul id="possibleAnswers"></ul>
+        </section>
+        
+
         <section class="card timer">
             <section class="timer-text">
             <section class="large-font timer-count">60</section>
@@ -29,9 +34,9 @@
         <section class="card current-score">
             <section class="win-loss-container"></section>
             <h3>Score</h3>
-            <h4>Wins: <span class="win">0</span></h4>
-            <h4>Losses: <span class="lose">0</span></h4>
-            <button class="restart-game">Restart Game</button>
+            <h4>Correct: <span class="correct">0</span></h4>
+            <h4>Wrong: <span class="wrong">0</span></h4>
+            <button class="restartButton">Restart</button>
         </seciton>
 
         <section class="card top-score-container">
@@ -41,5 +46,6 @@
     </main>
     <button class="center start-button">Start</button>
 
+<script src="/assets/script.js"></script>
 </body>
 </html>
