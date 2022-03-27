@@ -1,29 +1,26 @@
 // creating all variables for the game //
-var intro = document.querySelector(".intro");
-var correct = document.querySelector(".correct");
-var wrong = document.querySelector(".wrong");
-var timerElement = document.querySelector(".timer-count");
-var startButton = document.querySelector(".start-button");
-var questionEl = document.querySelector("#questions");
-var possibleAnswersEl = document.querySelector("#possibleAnswers")
-var screen0Ele = document.querySelector("#screen0");
-var screen1Ele = document.querySelector("screen1");
+var timerEl = document.querySelector(".timer-count");
+var startButton = document.querySelector("#start-btn");
+var nextButton = document.querySelector("#next-button");
+var questionContainerEl = document.querySelector("#question-container");
+var startContainerEl = document.querySelector("#start-container");
+var questionEl = document.querySelector("#question");
+var answerButtonsEl = document.querySelector("#answer-buttons");
+var checkAnswerEl = document.querySelector("#check-answer");
+var viewHighScores = document.querySelector("highscores-link");
+var submitButton = document.querySelector("submit-btn");
+var clearScoreButton = document.querySelector("clear-btn");
+var initialsField = document.querySelector("player-name");
+var restartButton = document.querySelector("restart-btn");
+var scoreField = document.querySelector("player-score");
+var scores = JSON.parse(localStorage.getItem("scores")) || [];
 
-var correctCounter = 0;
-var wrongCounter = 0;
-var isWin = false
-var timer;
-var timerCount;
-
-var dynamicElements =[
-    screen0Ele,
-    screen1Ele,
-]
-
-var HIDE_CLASS = "hide";
+var shuffledQuestions, currentQuestionIndex;
+var timeLeft = 60
+var timerID;
 
 // Created the questions to be populated on the quiz //
-var sommQuestions = [
+var questions = [
     {
     question: 'Which of these is not a red grape?',
     answers: ['Pinot Noir', 'Pinot Grigio', 'Pinot Meunier', 'Pinot Nero'],
@@ -76,130 +73,101 @@ var sommQuestions = [
     },
 ]
 
-var currentQuestion = 0
+startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", () => {
+    currentQuestionIndex++
+    setNextQuestion()
+});
 
-// this function is called when the page loads 
-function init() {
-    getCorrects();
-    getWrongs;
-}
-
-// function setState(state) {
-//     switch (state) {
-//       case 1:
-//         populateQuestions();
-//         break;
-//       default:
-//         break;
-//     }
-
-//     dynamicElements.forEach(function (ele) {
-//         var possibleStatesAttr = ele.getAttribute("data-states");
-//         var possibleStates = JSON.parse(possibleStatesAttr);
-//         if (possibleStates.includes(state)) {
-//             ele.classList.remove(HIDE_CLASS);
-//         } else {
-//         ele.classList.add(HIDE_CLASS);
-//         }
-//     });
-// }
-// function to start the game //
-
-
-function startGame() {
-    isWin = false;
-    timerCount = 60;
-    // Prevents start button from being clicked when round is in progress
-    startButton.disabled = true;
-    displayQuestions()
-    startTimer()
-}
 // function for the timer
 function startTimer() {
-    timer = setInterval(function() {
-      timerCount--;
-      timerElement.textContent = timerCount;
-      if (timerCount >= 0) {
-        if (isWin && timerCount > 0) {
-          // Clears interval and stops timer
-          clearInterval(timer);
-          winGame();
+    timeLeft--;
+      timerEl.textContent = "Time: " + timeLeft;
+      if (timeLeft <= 0) {
+        saveScore();
+    }
+}
+    
+// function to start the game //
+function startGame() {
+    timerID = setInterval(startTimer, 1000);
+    startContainerEl.classList.add("hide");
+    shuffledQuestions = questions.sort(() => Math.random() - .5)
+    currentQuestionIndex = 0
+    questionContainerEl.classList.remove("hide");
+}
+
+startTimer();
+setNextQuestion();
+
+function setNextQuestion() {
+    resetState();
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+}
+
+function showQuestion(question) {
+    questionEl.innerText = question.question
+    question.answers.array.forEach(answer => {
+        var button = document.createElement("button")
+        button.innerText = answer.text
+        button.classList.add("btn")
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
         }
-      }
-      // Tests if time has run out
-      if (timerCount === 0) {
-        // Clears interval
-        clearInterval(timer);
-        loseGame();
-      }
-    }, 1000);
+    button.addEventListener("click", selectAnswer)
+    answerButtonsEl.appendChild(button)    
+    });
 }
 
-// function populateQuestions() {
-//     var questions = sommQuestions[currentQuestion];
-//     possibleAnswersEl.innerHTML = "";
-//     sommQuestions.textcontent = questions.question;
-//     questions.answers.forEach(function(question) {
-//         var li = document.createElement('li');
-//         li.textContent = question;
-//         possibleAnswersEl.appendChild(li);
-//     });
-//     if (currentQuestion === sommQuestions.length - 1) {
-//         currentQuestion = 0;
-//     } else {
-//         currentQuestion++;
-//     }
-// }
-// Get stored value from client storage, if it exists
-function getCorrects() {
-    var storedWins = localStorage.getItem("correctCount");
-    if (storedWins === null) {
-      correctCounter = 0;
-    } else {
-      correctCounter = storedWins;
+function resetState() {
+    nextButton.classList.add("hide");
+    checkAnswerEl.classList.add("hide");
+    while (answerButtonsEl.firstChild) {
+        answerButtonsEl.removeChild(answerButtonsEl.firstChild)
     }
-    //Render win count to page
-    correct.textContent = correctCounter;
 }
-  
-function getWrongs() {
-    var storedLosses = localStorage.getItem("wrongCount");
-    if (storedLosses === null) {
-      wrongCounter = 0;
+function selectAnswer(e) {
+    var selectedButton = e.traget;
+    var correct = selectedButton.dataset.correct;
+    checkAnswerEl.classList.remove("hide")
+    if (correct) {
+        checkAnswerEl.innerHTML = "CORRECT!"
     } else {
-      wrongCounter = storedLosses;
+        checkAnswerEl.innerHTML = "WRONG!";
+        if (timeLeft <=0) {
+            timeLeft = 0;
+        } else {
+            // penalty //
+            timeLeft -= 10;
+        }
     }
-    wrong.textContent = wrongCounter;
+}
+Array.from(answerButtonsEl.children).forEach(button => {
+    setStatusClass(button, button.dataset.correct)
+})
+
+if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove("hide")
+    checkAnswerEl.classList.remove,("hide")
+} else {
+    startButton.classList.remove("hide")
+    saveScore();
 }
 
-function winGame() {
-    intro.textContent = "YOU WON!!!🏆 ";
-    correctCounter++
-    startButton.disabled = false;
-    setCorrects()
+function setStatusClass(element, correct) {
+    clearStatusClass(element)
+    if (correct) {
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+    }
 }
 
-function loseGame() {
-    intro.textContent = "GAME OVER";
-    wrongCounter++
-    startButton.disabled = false;
-    setWrongs()
+function clearStatusClass(element) {
+    element.classList.add("correct");
+    element.classList.add("wrong");
 }
 
-
-function setCorrects() {
-    correct.textContent = correctCounter;
-    localStorage.setItem("correctCount", correctCounter);
-}
-  
-// Updates lose count on screen and sets lose count to client storage
-  function setWrongs() {
-    wrong.textContent = wrongCounter;
-    localStorage.setItem("wrongCount", wrongCounter);
-}
-
-// calling the function //
-init();
 
 // Added reset button
 var restartButton = document.querySelector(".restartButton");
@@ -214,6 +182,6 @@ function restartGame() {
 }
 
 
-startButton.addEventListener("click", startGame);
+
 
 restartButton.addEventListener("click", restartGame);
