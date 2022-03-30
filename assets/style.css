@@ -22,7 +22,7 @@ body {
     margin-top: 20px;
 }
 
-.start-button {
+.start-btn .next-btn {
     font-size: 52px;
     height: 100px;
     line-height: 8px;
@@ -31,7 +31,9 @@ body {
 .intro {
     line-height: 300px;
 }
-
+.small-header {
+    color: aliceblue;
+}
 .current-score .win-loss-container {
     display: flex;
     justify-content: space-between;
@@ -41,6 +43,10 @@ body {
     margin-top: 90px;
 }
 
+#question {
+    font-size: 50px;
+}
+
 button {
     background: radial-gradient(circle, rgba(240,230,140,1) 0%, rgba(233, 160, 4, 0.954) 100%);
     border-radius: 8px;
@@ -48,8 +54,6 @@ button {
     cursor: pointer;
     font-size: 2em;
     letter-spacing: 0.21px;
-    line-height: 16px;
-    max-width: 255px;
     padding: 20px 52px;
     text-align: center;
     transition-duration: 0.15s;
@@ -64,7 +68,7 @@ header {
     margin-bottom: 20px;
     text-align: center;
     background: #13293d;
-    color: rgba(163, 3, 3, 0.466);
+    color: rgba(211, 1, 1, 0.623);
     border-bottom:30px #879274;
 }
 
@@ -78,6 +82,10 @@ main {
     width: 65vw;
     height: 500px;
     margin: auto;
+}
+
+.question {
+    font-size: 40px;
 }
 
 .card {
@@ -98,7 +106,7 @@ main {
 p {
     font-size: 24px;
     padding-top: 15px;
-    color: rgb(0, 255, 170);
+    color: rgb(1, 2, 14);
 }
 .timer {
     height: 240px;

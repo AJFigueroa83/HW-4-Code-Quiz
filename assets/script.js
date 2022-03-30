@@ -1,7 +1,7 @@
 // creating all variables for the game //
 var timerEl = document.querySelector(".timer-count");
 var startButton = document.querySelector("#start-btn");
-var nextButton = document.querySelector("#next-button");
+var nextButton = document.querySelector("#next-btn");
 var questionContainerEl = document.querySelector("#question-container");
 var startContainerEl = document.querySelector("#start-container");
 var questionEl = document.querySelector("#question");
@@ -14,7 +14,7 @@ var initialsField = document.querySelector("#player-name");
 var restartButton = document.querySelector("#restart-btn");
 var scoreField = document.querySelector("#player-score");
 var scores = JSON.parse(localStorage.getItem("#scores")) || [];
-
+var scoreCard = document.querySelector("#score-container");
 var shuffledQuestions = []; 
 var currentQuestionIndex = 0;
 var timeLeft = 60;
@@ -127,6 +127,7 @@ function startGame() {
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     questionContainerEl.classList.remove("hide");
+    scoreCard.classList.add("hide");
 }
 
 startTimer();
@@ -185,12 +186,14 @@ Array.from(answerButtonsEl.children).forEach(button => {
     setStatusClass(button, button.dataset.correct)
 })
 
-if (shuffledQuestions > currentQuestionIndex + 1) {
-    nextButton.classList.remove("hide")
-    checkAnswerEl.classList.remove,("hide")
-} else {
-    startButton.classList.remove("hide")
-    saveScore();
+function shuffledQuestions() {
+    if (shuffledQuestions.length > currentQuestionIndex) {
+        nextButton.classList.remove("hide")
+        checkAnswerEl.classList.remove,("hide")
+    } else {
+        startButton.classList.remove("hide")
+        saveScore();
+    }
 }
 
 function setStatusClass(element, correct) {
@@ -213,14 +216,15 @@ function saveScore() {
     timerEl.textContent = "Time: " + timeLeft;
     setTimeout(function () {
         questionContainerEl.classList.add("hide");
-        document.getElementById("score-container").classList.remove("hide");
-        document.getElementById("your-score").textContent = "Your Final Score is " + timeLeft;
+        document.querySelector("#score-container").classList.remove("hide");
+        document.querySelector("#your-score").textContent = "Your Final Score is " + timeLeft;
+        scoreCard.classList.remove("hide");
     }, 1000)
 }
 
 // get score from local storage //
 var loadScores = function () {
-    if (!savedScores) {
+    if (!saveScore) {
         return false;
     }
     saveScore = JSON.parse(saveScore);
@@ -241,7 +245,6 @@ var loadScores = function () {
 function showHighScores(initials) {
     document.getElementById("highscores").classList.remove("hide")
     document.getElementById("score-container").classList.add("hide");
-
     startContainerEl.classList.add("hide");
     questionContainerEl.classList.add("hide");
     if (typeof initials == "string") {
@@ -271,7 +274,6 @@ submitButton.addEventListener("click", function(event) {
     var initials = document.querySelector("#initials-field").value;
     showHighScores(initials);
 })
-
 
 // Added reset button
 restartButton.addEventListener("click", function() {

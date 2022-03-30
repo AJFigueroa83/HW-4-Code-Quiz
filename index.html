@@ -11,13 +11,13 @@
 <body>  
     <header class="large-font">
         <h1>Sommelier's Quiz</h1>
-        <p>Do you have what it takes to beat the quiz!?</p>
+        <p class="small-header">Do you have what it takes to beat the quiz!?</p>
     </header>
 
     <main>    
         <section class="card start-quiz" id="start-container">
             <p class="large-font intro">Basic Somm Quiz</p>
-            <p>You have 60 seconds to answers as many questions as you can. wrong answers will deduct 10 seconds off your time.
+            <p>You have 60 seconds to answer as many questions as you can. Wrong answers will deduct 10 seconds off your time.
                 Click start when you are ready.
             </p>
         </section>
@@ -32,14 +32,24 @@
             </section>
             <h2 id="check-answer" class="correct-wrong hide"></h2>
             <section class="controls">
-                <button id="next-button" class="nxt-btn hide">Next</button>
+                <button id="next-btn" class="nxt-btn hide">Next</button>
             </section>
         </section>
 
-        <section class="card timer">
-            <section class="timer-text">
-            <section class="large-font timer-count">60</section>
-            <h3>Seconds Remaining</h3>
+        <section>
+            <section class="scores card" id="viewHS">
+                <a id="highscores-link">View HighScores</a>
+            </section>
+
+            <section class="card timer">
+                <section class="timer-text">
+                <section class="large-font timer-count">60</section>
+                <h3>Seconds Remaining</h3>
+            </section>
+
+            <section class="controls">
+                <button class="center start-btn" id="start-btn">Start Quiz</button>
+            </section>
         </section>
 
         <section class="card hide" id="score-container">
@@ -63,10 +73,8 @@
         </section>
     </main>
 
-    <section class="controls">
-        <button class="center start-btn" id="start-btn">Start Quiz</button>
-    </section>
-
+    
+    
 <script src="/assets/script.js"></script>
 </body>
 </html>
