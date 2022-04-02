@@ -10,18 +10,18 @@ This quiz set out to test some basic knowledge from the world of alcoholic bever
 
 ## Story
 
-WHEN you click start
-THEN the game and timer will start.
-WHEN you choose your answer
-THEN you will know if you are right or wrong
-WHEN you click Next
-THEN you are taken to the next question
-WHEN you answer all questions or time runs out
+WHEN you click start  
+THEN the game and timer will start.  
+WHEN you choose your answer  
+THEN you will know if you are right or wrong  
+WHEN you click Next  
+THEN you are taken to the next question  
+WHEN you answer all questions or time runs out  
 THEN the game is over and you can input your initials.
 
-## Deplyment
+## Deployment
 
-Click [here]() to view the game.
+Click [here](https://ajfigueroa83.github.io/HW-4-Code-Quiz/) to view the game.
 
 ## Mock UP
 
