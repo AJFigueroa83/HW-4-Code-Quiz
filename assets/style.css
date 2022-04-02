@@ -8,7 +8,12 @@ body {
     flex-direction: column;
     min-height: 100vh;
     justify-content: flex-start;
-    background: linear-gradient(0deg, rgb(95, 38, 23) 0%, rgb(233, 137, 108) 63%);
+    background-image: url(https://www.parkstreet.com/wp-content/uploads/Barrels-2-1.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+
 }
 
 .hide {
@@ -22,7 +27,7 @@ body {
     margin-top: 20px;
 }
 
-.start-btn .next-btn {
+.start-btn {
     font-size: 52px;
     height: 100px;
     line-height: 8px;
@@ -105,12 +110,16 @@ main {
 
 p {
     font-size: 24px;
+    text-align: center;
     padding-top: 15px;
     color: rgb(1, 2, 14);
 }
+
 .timer {
     height: 240px;
     padding: 10px;
+    margin-right: 75px;
+    margin-top: 50px;
     background: #13293d;
     color: #fff;
     text-align: center;
